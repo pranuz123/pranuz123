@@ -165,6 +165,199 @@ body {
   to { transform: translateX(-100%); }
 }
 
+/* When a message is emoji-only (no text), blow the emoji up huge. */
+.content.emoji-only .emoji {
+  font-size: 52vmin;
+}
+
+/* ==========================================================================
+   Animated "living face" — the eye-catching emoji-car character.
+   A yellow disc with blinking eyes and an expression-driven mouth. Emotions
+   are selected via [data-expression] on #face; each hides/shows the right
+   parts. Everything is pure CSS so it runs on any kiosk browser.
+   ========================================================================== */
+.face {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 68vmin;
+  height: 68vmin;
+  margin: -34vmin 0 0 -34vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 38%, #ffe259, #ffc400 70%, #f0a800);
+  box-shadow: inset 0 -4vmin 6vmin rgba(0, 0, 0, 0.18);
+  animation: facePop 0.45s ease, faceBob 3.2s ease-in-out infinite;
+}
+.face[hidden] { display: none; }
+
+/* Eyes -------------------------------------------------------------------- */
+.face .eye {
+  position: absolute;
+  top: 33%;
+  width: 13%;
+  height: 17%;
+  background: #202020;
+  border-radius: 50%;
+  transform-origin: center;
+  animation: blink 4.5s infinite;
+}
+.face .eye.left { left: 25%; }
+.face .eye.right { right: 25%; }
+
+/* Eyebrows (hidden unless an expression needs them) ----------------------- */
+.face .brow {
+  position: absolute;
+  top: 24%;
+  width: 16%;
+  height: 3.4%;
+  background: #202020;
+  border-radius: 2vmin;
+  display: none;
+}
+.face .brow.left { left: 23%; }
+.face .brow.right { right: 23%; }
+
+/* Sunglasses (cool) ------------------------------------------------------- */
+.face .shades {
+  position: absolute;
+  top: 31%;
+  left: 18%;
+  right: 18%;
+  height: 17%;
+  display: none;
+  background:
+    linear-gradient(#111, #333);
+  border-radius: 8vmin 8vmin 6vmin 6vmin;
+  box-shadow: 0 0 0 1vmin #111;
+}
+
+/* Mouth — default is a friendly smile; expressions override below. -------- */
+.face .mouth {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translateX(-50%);
+  width: 34%;
+  height: 30%;
+  background: #202020;
+  border-radius: 50%;
+  clip-path: polygon(0 52%, 100% 52%, 100% 100%, 0 100%);
+}
+
+/* --- Expression overrides --- */
+
+/* Laugh: wide open smile */
+.face[data-expression="laugh"] .mouth {
+  height: 34%;
+  top: 50%;
+  clip-path: polygon(0 40%, 100% 40%, 100% 100%, 0 100%);
+}
+
+/* Wink: left eye becomes a happy arc */
+.face[data-expression="wink"] .eye.left {
+  animation: none;
+  height: 4%;
+  top: 40%;
+  border-radius: 3vmin;
+}
+
+/* Love: heart eyes, drawn in CSS so they scale with the face */
+.face[data-expression="love"] .eye {
+  background: transparent;
+  animation: none;
+  width: 20%;
+  height: 20%;
+  top: 30%;
+  overflow: visible;
+}
+.face[data-expression="love"] .eye::before,
+.face[data-expression="love"] .eye::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 80%;
+  background: #ff2d55;
+  border-radius: 50% 50% 0 0;
+}
+.face[data-expression="love"] .eye::before {
+  left: 50%;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+.face[data-expression="love"] .eye::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+/* Cool: sunglasses hide the eyes */
+.face[data-expression="cool"] .eye { display: none; }
+.face[data-expression="cool"] .shades { display: block; }
+
+/* Surprised: wide eyes, round "O" mouth */
+.face[data-expression="surprised"] .eye {
+  animation: none;
+  transform: scale(1.25);
+}
+.face[data-expression="surprised"] .mouth {
+  width: 20%;
+  height: 26%;
+  top: 58%;
+  clip-path: none;
+  border-radius: 50%;
+}
+
+/* Sad: frown + downturned brows */
+.face[data-expression="sad"] .mouth {
+  top: 66%;
+  height: 26%;
+  clip-path: polygon(0 0, 100% 0, 100% 48%, 0 48%);
+}
+.face[data-expression="sad"] .brow {
+  display: block;
+  height: 3%;
+  transform: rotate(-15deg); /* inner ends raised → worried/sad */
+}
+.face[data-expression="sad"] .brow.right { transform: rotate(15deg); }
+
+/* Angry: straight small mouth + inward brows */
+.face[data-expression="angry"] .mouth {
+  width: 26%;
+  height: 5%;
+  top: 66%;
+  clip-path: none;
+  border-radius: 2vmin;
+}
+.face[data-expression="angry"] .brow {
+  display: block;
+  top: 27%;
+  transform: rotate(20deg); /* inner ends lowered → angry V */
+}
+.face[data-expression="angry"] .brow.right { transform: rotate(-20deg); }
+
+/* Sleepy: half-closed eyes */
+.face[data-expression="sleepy"] .eye {
+  animation: none;
+  height: 4%;
+  top: 40%;
+  border-radius: 3vmin;
+}
+
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(0.08); }
+}
+@keyframes faceBob {
+  0%, 100% { margin-top: -34vmin; }
+  50% { margin-top: -37vmin; }
+}
+@keyframes facePop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .content { animation: none !important; }
+  .face, .face .eye { animation: none !important; }
 }

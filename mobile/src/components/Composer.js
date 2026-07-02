@@ -10,6 +10,7 @@ import { useVoice } from '../voice';
  */
 export default function Composer({ onSend, onEnqueue, disabled, maxLength }) {
   const [text, setText] = useState('');
+  const [emoji, setEmoji] = useState('');
   const [animation, setAnimation] = useState('fade');
 
   // Dictation appends the final transcript into the text box for review/edit
@@ -19,11 +20,12 @@ export default function Composer({ onSend, onEnqueue, disabled, maxLength }) {
   });
 
   const trimmed = text.trim();
-  const canSend = !disabled && trimmed.length > 0;
+  const canSend = !disabled && (trimmed.length > 0 || emoji.length > 0);
 
-  const build = () => ({ text: trimmed, animation });
-  const doSend = () => { if (canSend) { onSend(build()); setText(''); } };
-  const doQueue = () => { if (canSend) { onEnqueue(build()); setText(''); } };
+  const build = () => ({ text: trimmed, emoji, animation });
+  const reset = () => { setText(''); setEmoji(''); };
+  const doSend = () => { if (canSend) { onSend(build()); reset(); } };
+  const doQueue = () => { if (canSend) { onEnqueue(build()); reset(); } };
 
   return (
     <View style={[styles.wrap, disabled && styles.disabled]}>
@@ -31,6 +33,15 @@ export default function Composer({ onSend, onEnqueue, disabled, maxLength }) {
         <Text style={styles.lockNote}>🔒 Free typing is turned off in Settings. Use presets.</Text>
       )}
       <View style={styles.inputRow}>
+        <TextInput
+          style={styles.emojiInput}
+          value={emoji}
+          onChangeText={(t) => setEmoji([...t].slice(0, 2).join(''))}
+          placeholder="🙂"
+          placeholderTextColor={theme.textDim}
+          editable={!disabled}
+          maxLength={4}
+        />
         <TextInput
           style={styles.input}
           value={text}
@@ -87,6 +98,10 @@ const styles = StyleSheet.create({
   disabled: { opacity: 0.75 },
   lockNote: { color: theme.accent, marginBottom: 8, fontSize: 13 },
   inputRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 8 },
+  emojiInput: {
+    width: 56, minHeight: 56, textAlign: 'center', fontSize: 24, color: theme.text,
+    backgroundColor: theme.surfaceAlt, borderRadius: 10, borderWidth: 1, borderColor: theme.border,
+  },
   input: {
     flex: 1, minHeight: 56, maxHeight: 120, color: theme.text, fontSize: 18,
     backgroundColor: theme.surfaceAlt, borderRadius: 10, paddingHorizontal: 12, paddingTop: 10, paddingBottom: 10,

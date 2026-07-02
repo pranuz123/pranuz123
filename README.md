@@ -98,6 +98,15 @@ device just relays and enforces the rules.
   HAZARD AHEAD**. These are high-priority: they override the screen, can't be
   bumped by a normal message, and stay up until you clear them.
 
+### Faces & reactions (the attention-grabber)
+
+- **Animated living faces** — tap a face and the rear screen shows a big,
+  blinking, expressive character drawn in pure CSS: happy, laughing, wink, heart
+  eyes, cool (shades), whoa, sad, grr, sleepy. No image assets — runs on any
+  kiosk browser.
+- **Big emoji gallery** — one-tap giant 👍 ❤️ 🎉 🙏 … blown up full-screen.
+- **Custom emoji** — attach any emoji from your keyboard to a composed message.
+
 ### Core
 
 - **Preset quick messages** — one-tap "THANKS!", "GO AHEAD", "BABY ON BOARD",

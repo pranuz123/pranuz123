@@ -17,6 +17,7 @@
   const contentEl = document.getElementById('content');
   const emojiEl = document.getElementById('emoji');
   const textEl = document.getElementById('text');
+  const faceEl = document.getElementById('face');
   const idle = document.getElementById('idle');
   const statusEl = document.getElementById('status');
   const hintEl = document.getElementById('hint');
@@ -86,14 +87,25 @@
   }
 
   function render(message) {
-    if (!message || (!message.text && !message.emoji)) {
+    if (!message || (!message.text && !message.emoji && !message.face)) {
       showIdle();
       return;
     }
     idle.classList.add('hidden');
+
+    // Animated face message — show the living character instead of text.
+    if (message.face) {
+      stage.classList.add('blank');
+      showFace(message.face);
+      return;
+    }
+    hideFace();
+
     stage.classList.remove('blank');
     emojiEl.textContent = message.emoji || '';
     textEl.textContent = message.text || '';
+    // A message with an emoji but no words renders the emoji extra-large.
+    contentEl.classList.toggle('emoji-only', !message.text && !!message.emoji);
     // Enforce the safety minimum font size while still fitting long text.
     fitText(message.text || '');
     // Restart the animation by toggling the attribute on the next frame.
@@ -101,6 +113,20 @@
     requestAnimationFrame(() => {
       stage.dataset.animation = message.animation || 'none';
     });
+  }
+
+  function showFace(expression) {
+    faceEl.dataset.expression = expression;
+    faceEl.hidden = false;
+    // Restart the entrance animation on each new face.
+    faceEl.style.animation = 'none';
+    // eslint-disable-next-line no-unused-expressions
+    faceEl.offsetHeight; // force reflow
+    faceEl.style.animation = '';
+  }
+
+  function hideFace() {
+    faceEl.hidden = true;
   }
 
   // Scale the text down for long messages but never below the configured floor.
@@ -116,6 +142,7 @@
 
   function showIdle() {
     stage.classList.add('blank');
+    hideFace();
     idle.classList.remove('hidden');
   }
 

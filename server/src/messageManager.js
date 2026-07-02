@@ -34,7 +34,7 @@ class MessageManager extends EventEmitter {
    */
   _sanitize(payload, { isPreset = false } = {}) {
     const msg = makeMessage(payload, this.config);
-    if (!msg.text && !msg.emoji) return null;
+    if (!msg.text && !msg.emoji && !msg.face) return null;
     if (this.config.profanityFilter && !isPreset) {
       msg.text = profanity.filter(msg.text).clean;
     }

@@ -59,6 +59,28 @@ const PRESETS = [
   { id: 'love', text: 'HAVE A GREAT DAY', emoji: '☀️', animation: 'scroll' },
 ];
 
+// Expressive animated faces rendered on the display as living, blinking CSS
+// characters (the "emoji car" attention-grabber). `emoji` is the fallback shown
+// on the phone's control button and if a display can't draw the face.
+const FACES = [
+  { id: 'happy', label: 'Happy', emoji: '🙂' },
+  { id: 'laugh', label: 'Laughing', emoji: '😆' },
+  { id: 'wink', label: 'Wink', emoji: '😉' },
+  { id: 'love', label: 'Love', emoji: '😍' },
+  { id: 'cool', label: 'Cool', emoji: '😎' },
+  { id: 'surprised', label: 'Whoa', emoji: '😮' },
+  { id: 'sad', label: 'Sad', emoji: '😢' },
+  { id: 'angry', label: 'Grr', emoji: '😠' },
+  { id: 'sleepy', label: 'Sleepy', emoji: '😴' },
+];
+const FACE_IDS = new Set(FACES.map((f) => f.id));
+
+// A curated palette of big, friendly emoji for one-tap reactions.
+const EMOJI_GALLERY = [
+  '👍', '🙏', '❤️', '😂', '😉', '😎', '🤩', '🥰', '😅', '🙌',
+  '👏', '✌️', '🤝', '😮', '🎉', '☀️', '👋', '🫶', '💯', '🚗',
+];
+
 // High-priority, attention-grabbing messages. These use `priority: 'high'` so
 // they override whatever is on screen and cannot be bumped by a normal message,
 // and a long duration so they stay up until the driver clears them.
@@ -84,6 +106,7 @@ function makeMessage(input = {}, cfg = DEFAULT_CONFIG) {
     id: input.id || `m_${Math.random().toString(36).slice(2, 10)}`,
     text,
     emoji: typeof input.emoji === 'string' ? input.emoji.slice(0, 8) : '',
+    face: FACE_IDS.has(input.face) ? input.face : '',
     animation,
     // duration <= 0 means "use the server's autoClear default"
     durationMs: Number.isFinite(input.durationMs) ? Math.max(0, input.durationMs) : 0,
@@ -94,4 +117,6 @@ function makeMessage(input = {}, cfg = DEFAULT_CONFIG) {
 
 // CommonJS export — this copy is consumed by the Node server. The mobile app
 // uses its own ES-module copy at mobile/src/protocol.js.
-module.exports = { C2S, S2C, ANIMATIONS, DEFAULT_CONFIG, PRESETS, EMERGENCY, makeMessage };
+module.exports = {
+  C2S, S2C, ANIMATIONS, DEFAULT_CONFIG, PRESETS, EMERGENCY, FACES, EMOJI_GALLERY, makeMessage,
+};

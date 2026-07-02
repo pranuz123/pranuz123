@@ -7,6 +7,7 @@ import {
 import ConnectionBar from './src/components/ConnectionBar';
 import DriveStatusBar from './src/components/DriveStatusBar';
 import PresetGrid from './src/components/PresetGrid';
+import FacesGallery from './src/components/FacesGallery';
 import Composer from './src/components/Composer';
 import QueuePanel from './src/components/QueuePanel';
 import EmergencyRow from './src/components/EmergencyRow';
@@ -150,6 +151,13 @@ export default function App() {
 
             <Text style={styles.heading}>Quick messages</Text>
             <PresetGrid onSend={cs.sendPreset} disabled={!connected} />
+
+            <Text style={styles.heading}>Faces & reactions</Text>
+            <FacesGallery
+              onSendFace={(f) => cs.sendPreset({ id: `face-${f.id}`, face: f.id, animation: 'pulse' })}
+              onSendEmoji={(e) => cs.sendPreset({ id: `emo-${e}`, emoji: e, text: '', animation: 'pulse' })}
+              disabled={!connected}
+            />
 
             <Text style={styles.heading}>Compose</Text>
             <Composer

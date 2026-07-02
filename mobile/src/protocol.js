@@ -49,6 +49,25 @@ export const PRESETS = [
   { id: 'love', text: 'HAVE A GREAT DAY', emoji: '☀️', animation: 'scroll' },
 ];
 
+// Expressive animated faces drawn on the display. `emoji` is shown on the phone
+// button and used as a fallback. See shared/protocol.js for the canonical copy.
+export const FACES = [
+  { id: 'happy', label: 'Happy', emoji: '🙂' },
+  { id: 'laugh', label: 'Laughing', emoji: '😆' },
+  { id: 'wink', label: 'Wink', emoji: '😉' },
+  { id: 'love', label: 'Love', emoji: '😍' },
+  { id: 'cool', label: 'Cool', emoji: '😎' },
+  { id: 'surprised', label: 'Whoa', emoji: '😮' },
+  { id: 'sad', label: 'Sad', emoji: '😢' },
+  { id: 'angry', label: 'Grr', emoji: '😠' },
+  { id: 'sleepy', label: 'Sleepy', emoji: '😴' },
+];
+
+export const EMOJI_GALLERY = [
+  '👍', '🙏', '❤️', '😂', '😉', '😎', '🤩', '🥰', '😅', '🙌',
+  '👏', '✌️', '🤝', '😮', '🎉', '☀️', '👋', '🫶', '💯', '🚗',
+];
+
 // High-priority, attention-grabbing messages that override the screen and stay
 // up until cleared. See shared/protocol.js for the authoritative copy.
 export const EMERGENCY = [
