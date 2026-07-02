@@ -134,9 +134,6 @@ device just relays and enforces the rules.
 
 ## Roadmap ideas
 
-- **Parked masked-contact** — "BLOCKING YOU? TAP TO CALL" with a QR/short code
-  that reaches you without exposing your phone number (needs a small relay
-  backend, e.g. Twilio).
 - **Universal icon mode + auto-translate** — render messages in the local
   language or pure emoji so there's no language barrier on the road.
 - **Hands-free wake word** — "Hey CarSign, say thanks."
