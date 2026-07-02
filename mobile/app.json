@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "CarSign",
+    "slug": "carsign",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0b0d12",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "CarSign uses the microphone to dictate messages for the car screen.",
+        "NSSpeechRecognitionUsageDescription": "CarSign transcribes your speech into on-screen messages."
+      }
+    },
+    "android": {
+      "package": "com.carsign.app",
+      "permissions": ["RECORD_AUDIO", "INTERNET"]
+    },
+    "plugins": ["@react-native-voice/voice"]
+  }
+}

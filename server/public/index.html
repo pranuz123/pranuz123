@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>CarSign Display</title>
+    <link rel="stylesheet" href="display.css" />
+  </head>
+  <body>
+    <!-- The message stage. `data-animation` drives the CSS animation. -->
+    <main id="stage" class="stage blank" data-animation="none">
+      <div id="content" class="content">
+        <span id="emoji" class="emoji"></span>
+        <span id="text" class="text"></span>
+      </div>
+    </main>
+
+    <!-- Idle screen shown when nothing is displayed. -->
+    <div id="idle" class="idle">
+      <div class="idle-logo">🚗💬</div>
+      <div class="idle-title">CarSign</div>
+      <div id="status" class="idle-status">Connecting…</div>
+      <button id="micBtn" class="mic-btn" hidden>🎤 Tap to speak</button>
+      <div id="hint" class="idle-hint"></div>
+    </div>
+
+    <script src="display.js"></script>
+  </body>
+</html>

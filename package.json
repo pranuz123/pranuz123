@@ -1,0 +1,23 @@
+{
+  "name": "carsign",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Show messages on a car's rear screen, controlled from a phone over local Wi-Fi, with voice input. Node display server + React Native controller app.",
+  "license": "MIT",
+  "workspaces": [
+    "server",
+    "mobile"
+  ],
+  "scripts": {
+    "server": "npm --prefix server start",
+    "mobile": "npm --prefix mobile start"
+  },
+  "keywords": [
+    "car",
+    "display",
+    "websocket",
+    "react-native",
+    "expo",
+    "raspberry-pi"
+  ]
+}
