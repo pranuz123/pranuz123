@@ -171,6 +171,21 @@ device just relays and enforces the rules.
 - Bluetooth transport as a Wi-Fi-free fallback; cloud relay for remote screens.
 - Custom preset editor and per-driver profiles.
 
-## License
+## Selling / licensing
 
-MIT — see [`LICENSE`](LICENSE).
+CarSign is a **commercial product**, not open-source. All original code is the
+author's to license; every bundled dependency is under a permissive license that
+allows commercial use.
+
+- **License:** proprietary commercial license — see [`LICENSE`](LICENSE). (On a
+  marketplace like Gumroad or CodeCanyon, that marketplace's license governs.)
+- **Third-party notices:** [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) —
+  keep this in any distribution.
+- **Buyer setup + pre-sale checklist:** [`docs/SETUP.md`](docs/SETUP.md).
+- **Safety & legal disclaimer:** [`docs/DISCLAIMER.md`](docs/DISCLAIMER.md) —
+  read before deploying or reselling.
+
+⚠️ Before you ship: configure a **licensed map-tile provider** (`TILE_URL`) —
+the default OpenStreetMap public tile server is not for commercial use — and
+rebrand the app id / names / copyright. The pre-sale checklist in the setup
+guide covers everything.

@@ -24,6 +24,12 @@ const httpServer = http.createServer((req, res) => {
     res.end(JSON.stringify({ ok: true, app: 'CarSign Cloud', live: store.all().length }));
     return;
   }
+  // Runtime config for the map page (tile provider is deployer-configured).
+  if (req.url === '/config.json') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ tiles: { url: config.tiles.url, attribution: config.tiles.attribution } }));
+    return;
+  }
   const urlPath = req.url === '/' ? '/map.html' : decodeURI(req.url.split('?')[0]);
   const filePath = path.join(PUBLIC_DIR, path.normalize(urlPath));
   if (!filePath.startsWith(PUBLIC_DIR)) {
@@ -137,6 +143,13 @@ httpServer.listen(config.port, config.host, () => {
   console.log(`CarSign Cloud relay on http://${config.host}:${config.port}`);
   console.log(`  Live map:   open the above URL in a browser`);
   console.log(`  Publishers: connect the app to ws://<this-host>:${config.port}`);
+  if (config.tiles.usingDefaultOsm) {
+    console.warn(
+      '\n  ⚠ Using the default OpenStreetMap tile server, which is NOT licensed\n' +
+      '    for commercial or heavy use. Set TILE_URL/TILE_ATTRIBUTION to a\n' +
+      '    licensed provider before production. See docs/SETUP.md.'
+    );
+  }
 });
 
 process.on('SIGINT', () => {

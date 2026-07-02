@@ -11,4 +11,15 @@ module.exports = {
     message: Number(process.env.TTL_MESSAGE) || 25000,
     reaction: Number(process.env.TTL_REACTION) || 15000,
   },
+
+  // Map tiles. IMPORTANT for commercial use: the default OpenStreetMap public
+  // tile server is NOT licensed for commercial or heavy traffic. Before you
+  // ship, set TILE_URL (and TILE_ATTRIBUTION) to a provider you have licensed —
+  // e.g. MapTiler, Mapbox, Thunderforest — usually with an access token baked
+  // into the URL template. See docs/SETUP.md.
+  tiles: {
+    url: process.env.TILE_URL || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: process.env.TILE_ATTRIBUTION || '© OpenStreetMap contributors',
+    usingDefaultOsm: !process.env.TILE_URL,
+  },
 };

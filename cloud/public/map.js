@@ -12,10 +12,17 @@
 
   // Map centered on a neutral world view until the first sign arrives.
   const map = L.map('map', { zoomControl: true, attributionControl: true }).setView([20, 0], 3);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors',
-  }).addTo(map);
+
+  // Tile provider is configured by the deployer (see docs/SETUP.md); fetch it at
+  // runtime so no key is hardcoded. Falls back to OSM only if the fetch fails.
+  fetch('config.json')
+    .then((r) => r.json())
+    .then((cfg) => addTiles(cfg.tiles))
+    .catch(() => addTiles({ url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '© OpenStreetMap contributors' }));
+
+  function addTiles(tiles) {
+    L.tileLayer(tiles.url, { maxZoom: 19, attribution: tiles.attribution }).addTo(map);
+  }
 
   const markers = new Map(); // sign id -> Leaflet marker
   let fittedOnce = false;
