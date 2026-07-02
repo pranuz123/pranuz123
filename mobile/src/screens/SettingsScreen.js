@@ -27,10 +27,14 @@ function Stepper({ label, value, min, max, step, format, onChange }) {
  * Full settings modal. Server address changes are applied via onSaveHost;
  * safety changes are pushed live to the server via onUpdateConfig.
  */
-export default function SettingsScreen({ visible, onClose, host, onSaveHost, config, onUpdateConfig }) {
+export default function SettingsScreen({
+  visible, onClose, host, onSaveHost, config, onUpdateConfig,
+  appSettings, onUpdateApp, drive,
+}) {
   const [draftHost, setDraftHost] = useState(host || '');
 
   const cfg = config || {};
+  const app = appSettings || {};
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
@@ -63,6 +67,55 @@ export default function SettingsScreen({ visible, onClose, host, onSaveHost, con
                 <Text style={styles.saveText}>Save</Text>
               </TouchableOpacity>
             </View>
+
+            <Text style={styles.sectionTitle}>Driving mode (this phone)</Text>
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>Speed-aware safety lock</Text>
+              <Switch
+                value={!!app.driveLock}
+                onValueChange={(v) => onUpdateApp({ driveLock: v })}
+                trackColor={{ true: theme.accent }}
+              />
+            </View>
+            <Text style={styles.help}>
+              Uses this phone's GPS to auto-adjust controls: parked = full
+              control, moving = presets & voice, fast = presets only.
+              {drive ? (drive.gpsAvailable
+                ? `  Currently ${drive.speedKmh} km/h.`
+                : '  (GPS/location not available right now.)') : ''}
+            </Text>
+
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>Auto "SORRY!" on hard brake</Text>
+              <Switch
+                value={!!app.autoReact}
+                onValueChange={(v) => onUpdateApp({ autoReact: v })}
+                trackColor={{ true: theme.accent }}
+              />
+            </View>
+            <Text style={styles.help}>
+              Detects hard braking with the motion sensor and flashes an apology
+              to the car behind. Heuristic — verify it suits your setup.
+            </Text>
+
+            <Stepper
+              label="Moving above"
+              value={app.movingKmh ?? 5}
+              min={2}
+              max={20}
+              step={1}
+              format={(v) => `${v} km/h`}
+              onChange={(v) => onUpdateApp({ movingKmh: v })}
+            />
+            <Stepper
+              label="Fast above"
+              value={app.fastKmh ?? 40}
+              min={20}
+              max={120}
+              step={5}
+              format={(v) => `${v} km/h`}
+              onChange={(v) => onUpdateApp({ fastKmh: v })}
+            />
 
             <Text style={styles.sectionTitle}>Safety</Text>
 

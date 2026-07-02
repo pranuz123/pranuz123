@@ -11,13 +11,17 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSMicrophoneUsageDescription": "CarSign uses the microphone to dictate messages for the car screen.",
-        "NSSpeechRecognitionUsageDescription": "CarSign transcribes your speech into on-screen messages."
+        "NSSpeechRecognitionUsageDescription": "CarSign transcribes your speech into on-screen messages.",
+        "NSLocationWhenInUseUsageDescription": "CarSign uses your speed to auto-adjust controls for safe driving."
       }
     },
     "android": {
       "package": "com.carsign.app",
-      "permissions": ["RECORD_AUDIO", "INTERNET"]
+      "permissions": ["RECORD_AUDIO", "INTERNET", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
     },
-    "plugins": ["@react-native-voice/voice"]
+    "plugins": [
+      "@react-native-voice/voice",
+      ["expo-location", { "locationWhenInUsePermission": "CarSign uses your speed to auto-adjust controls for safe driving." }]
+    ]
   }
 }

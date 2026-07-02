@@ -81,8 +81,27 @@ and Save. Once the header shows **Connected**, tap a preset or compose a message
 
 ## Features
 
-- **Preset quick messages** — one-tap "THANKS!", "SORRY!", "GO AHEAD", "BABY ON
-  BOARD", and more, each with an emoji and animation.
+The phone app is the full control center — messages, presets, scheduling, and
+every setting live there and push live to the screen. The server on the screen
+device just relays and enforces the rules.
+
+### Flagship — makes it a safety device, not a toy
+
+- **Speed-aware safety lock** — the phone's GPS speed auto-adjusts what you can
+  do: **parked** = full control (type/voice/presets), **moving** = presets +
+  hands-free voice only, **fast** = presets only. A **Passenger mode** toggle
+  unlocks full control when someone else is operating the app. Speed thresholds
+  are configurable.
+- **Auto-reactions** — the motion sensor detects a hard brake and automatically
+  flashes **"SORRY!"** to the car behind — zero taps.
+- **Emergency & hazard** — one-tap **HELP / CALL 911 / MEDICAL / BABY IN CAR /
+  HAZARD AHEAD**. These are high-priority: they override the screen, can't be
+  bumped by a normal message, and stay up until you clear them.
+
+### Core
+
+- **Preset quick messages** — one-tap "THANKS!", "GO AHEAD", "BABY ON BOARD",
+  and more, each with an emoji and animation.
 - **Custom + voice messages** — type or dictate; review before sending.
 - **Animations** — `fade`, `pulse`, `blink`, and marquee `scroll` for long text.
 - **Scheduling** — queue several messages; the screen advances automatically as
@@ -91,6 +110,11 @@ and Save. Once the header shows **Connected**, tap a preset or compose a message
   brightness, max length, and a "presets only" lock that disables free typing.
 - **Resilient** — both clients auto-reconnect; the server heartbeats and prunes
   dead links; the display keeps the screen awake via the Wake Lock API.
+
+> The driving lock and auto-reaction use `expo-location` and `expo-sensors`,
+> which run in Expo Go. If location permission is denied, the app assumes
+> "moving" and stays in the safer restricted mode. Hard-brake detection is a
+> motion-sensor heuristic — tune the thresholds in Settings for your mount.
 
 ## Development
 
@@ -101,9 +125,15 @@ and Save. Once the header shows **Connected**, tap a preset or compose a message
 
 ## Roadmap ideas
 
-- Bluetooth transport as a Wi-Fi-free fallback.
-- Speed-aware locking via the phone's GPS.
-- Cloud relay mode for remote screens.
+- **Parked masked-contact** — "BLOCKING YOU? TAP TO CALL" with a QR/short code
+  that reaches you without exposing your phone number (needs a small relay
+  backend, e.g. Twilio).
+- **Universal icon mode + auto-translate** — render messages in the local
+  language or pure emoji so there's no language barrier on the road.
+- **Hands-free wake word** — "Hey CarSign, say thanks."
+- **Watch / CarPlay / Assistant** quick-send so the phone never leaves the mount.
+- **OBD-II integration** — mirror real brake/turn signals to the screen.
+- Bluetooth transport as a Wi-Fi-free fallback; cloud relay for remote screens.
 - Custom preset editor and per-driver profiles.
 
 ## License

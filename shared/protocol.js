@@ -59,6 +59,17 @@ const PRESETS = [
   { id: 'love', text: 'HAVE A GREAT DAY', emoji: '☀️', animation: 'scroll' },
 ];
 
+// High-priority, attention-grabbing messages. These use `priority: 'high'` so
+// they override whatever is on screen and cannot be bumped by a normal message,
+// and a long duration so they stay up until the driver clears them.
+const EMERGENCY = [
+  { id: 'e-help', text: 'HELP', emoji: '🆘', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-call911', text: 'CALL 911', emoji: '📞', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-medical', text: 'MEDICAL EMERGENCY', emoji: '🚑', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-baby', text: 'BABY IN CAR', emoji: '👶', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-hazard', text: 'HAZARD AHEAD', emoji: '⚠️', animation: 'blink', priority: 'high', durationMs: 60000 },
+];
+
 /**
  * Normalize an arbitrary payload into a valid Message. Never throws — callers
  * (especially the server, which sees untrusted input) rely on this to sanitize.
@@ -83,4 +94,4 @@ function makeMessage(input = {}, cfg = DEFAULT_CONFIG) {
 
 // CommonJS export — this copy is consumed by the Node server. The mobile app
 // uses its own ES-module copy at mobile/src/protocol.js.
-module.exports = { C2S, S2C, ANIMATIONS, DEFAULT_CONFIG, PRESETS, makeMessage };
+module.exports = { C2S, S2C, ANIMATIONS, DEFAULT_CONFIG, PRESETS, EMERGENCY, makeMessage };

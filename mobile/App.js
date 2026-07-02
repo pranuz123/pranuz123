@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StatusBar,
   StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 
 import ConnectionBar from './src/components/ConnectionBar';
+import DriveStatusBar from './src/components/DriveStatusBar';
 import PresetGrid from './src/components/PresetGrid';
 import Composer from './src/components/Composer';
 import QueuePanel from './src/components/QueuePanel';
+import EmergencyRow from './src/components/EmergencyRow';
 import SettingsScreen from './src/screens/SettingsScreen';
 import { useCarSign } from './src/useCarSign';
+import { useDriveState } from './src/useDriveState';
+import { PRESETS } from './src/protocol';
 import { theme } from './src/theme';
 
 // Optional persistence — falls back to in-memory if the module isn't linked.
@@ -21,27 +25,57 @@ try {
   AsyncStorage = null;
 }
 const HOST_KEY = 'carsign.host';
+const APP_KEY = 'carsign.app';
+
+// Phone-local settings (the driving lock is driven by this phone's sensors, so
+// it isn't part of the shared server config).
+const DEFAULT_APP = { driveLock: true, autoReact: true, movingKmh: 5, fastKmh: 40 };
+
+const SORRY = PRESETS.find((p) => p.id === 'sorry');
 
 export default function App() {
   const [host, setHost] = useState('');
-  const [loadedHost, setLoadedHost] = useState(false);
+  const [appCfg, setAppCfg] = useState(DEFAULT_APP);
+  const [loaded, setLoaded] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [passengerMode, setPassengerMode] = useState(false); // in-memory only
 
-  // Load the last-used server address on first launch.
+  // Load persisted host + app settings on first launch.
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
-        const saved = AsyncStorage ? await AsyncStorage.getItem(HOST_KEY) : null;
-        if (alive && saved) setHost(saved);
-      } finally {
-        if (alive) setLoadedHost(true);
+        if (AsyncStorage) {
+          const [savedHost, savedApp] = await Promise.all([
+            AsyncStorage.getItem(HOST_KEY),
+            AsyncStorage.getItem(APP_KEY),
+          ]);
+          if (alive && savedHost) setHost(savedHost);
+          if (alive && savedApp) setAppCfg({ ...DEFAULT_APP, ...JSON.parse(savedApp) });
+        }
+      } catch { /* ignore */ } finally {
+        if (alive) setLoaded(true);
       }
     })();
     return () => { alive = false; };
   }, []);
 
   const cs = useCarSign(host || null);
+  const connected = cs.status === 'connected';
+
+  // Auto-reaction: a detected hard brake flashes SORRY! to the car behind.
+  const handleHardBrake = useCallback(() => {
+    if (connected && SORRY) cs.sendPreset(SORRY);
+  }, [connected, cs]);
+
+  const drive = useDriveState({
+    enabled: appCfg.driveLock,
+    passengerMode,
+    movingKmh: appCfg.movingKmh,
+    fastKmh: appCfg.fastKmh,
+    autoReact: appCfg.autoReact,
+    onHardBrake: handleHardBrake,
+  });
 
   const saveHost = async (value) => {
     setHost(value);
@@ -49,7 +83,15 @@ export default function App() {
     setSettingsOpen(false);
   };
 
-  const freeTypeDisabled = !cs.config.freeTypeEnabled;
+  const updateApp = async (partial) => {
+    const next = { ...appCfg, ...partial };
+    setAppCfg(next);
+    if (AsyncStorage) { try { await AsyncStorage.setItem(APP_KEY, JSON.stringify(next)); } catch { /* ignore */ } }
+  };
+
+  // Effective control gating: the server's free-type lock AND the driving mode.
+  const serverLocked = !cs.config.freeTypeEnabled;
+  const composerDisabled = !connected || serverLocked || !drive.restrictions.typing;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -67,7 +109,7 @@ export default function App() {
         </TouchableOpacity>
       ) : null}
 
-      {!host && loadedHost ? (
+      {!host && loaded ? (
         <View style={styles.empty}>
           <Text style={styles.emptyEmoji}>🚗💬</Text>
           <Text style={styles.emptyTitle}>Connect to your car screen</Text>
@@ -85,6 +127,19 @@ export default function App() {
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
           <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+            <DriveStatusBar
+              mode={drive.mode}
+              restrictions={drive.restrictions}
+              speedKmh={drive.speedKmh}
+              gpsAvailable={drive.gpsAvailable}
+              gpsPermission={drive.gpsPermission}
+              lockEnabled={appCfg.driveLock}
+              passengerMode={passengerMode}
+              onTogglePassenger={setPassengerMode}
+              connected={connected}
+              onVoiceSend={cs.sendMessage}
+            />
+
             <QueuePanel
               current={cs.current}
               queue={cs.queue}
@@ -94,15 +149,19 @@ export default function App() {
             />
 
             <Text style={styles.heading}>Quick messages</Text>
-            <PresetGrid onSend={cs.sendPreset} disabled={cs.status !== 'connected'} />
+            <PresetGrid onSend={cs.sendPreset} disabled={!connected} />
 
             <Text style={styles.heading}>Compose</Text>
             <Composer
               onSend={cs.sendMessage}
               onEnqueue={cs.enqueue}
-              disabled={freeTypeDisabled || cs.status !== 'connected'}
+              disabled={composerDisabled}
               maxLength={cs.config.maxLength || 60}
             />
+
+            <View style={{ marginTop: 6 }}>
+              <EmergencyRow onSend={cs.sendPreset} connected={connected} />
+            </View>
           </ScrollView>
         </KeyboardAvoidingView>
       )}
@@ -114,6 +173,9 @@ export default function App() {
         onSaveHost={saveHost}
         config={cs.config}
         onUpdateConfig={cs.updateConfig}
+        appSettings={appCfg}
+        onUpdateApp={updateApp}
+        drive={drive}
       />
     </SafeAreaView>
   );

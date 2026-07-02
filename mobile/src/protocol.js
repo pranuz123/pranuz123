@@ -48,3 +48,13 @@ export const PRESETS = [
   { id: 'brake', text: 'CHECK YOUR LIGHTS', emoji: '💡', animation: 'blink' },
   { id: 'love', text: 'HAVE A GREAT DAY', emoji: '☀️', animation: 'scroll' },
 ];
+
+// High-priority, attention-grabbing messages that override the screen and stay
+// up until cleared. See shared/protocol.js for the authoritative copy.
+export const EMERGENCY = [
+  { id: 'e-help', text: 'HELP', emoji: '🆘', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-call911', text: 'CALL 911', emoji: '📞', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-medical', text: 'MEDICAL EMERGENCY', emoji: '🚑', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-baby', text: 'BABY IN CAR', emoji: '👶', animation: 'blink', priority: 'high', durationMs: 600000 },
+  { id: 'e-hazard', text: 'HAZARD AHEAD', emoji: '⚠️', animation: 'blink', priority: 'high', durationMs: 60000 },
+];
