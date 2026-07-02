@@ -29,9 +29,10 @@ function Stepper({ label, value, min, max, step, format, onChange }) {
  */
 export default function SettingsScreen({
   visible, onClose, host, onSaveHost, config, onUpdateConfig,
-  appSettings, onUpdateApp, drive,
+  appSettings, onUpdateApp, drive, cloudStatus,
 }) {
   const [draftHost, setDraftHost] = useState(host || '');
+  const [draftCloud, setDraftCloud] = useState((appSettings && appSettings.cloudUrl) || '');
 
   const cfg = config || {};
   const app = appSettings || {};
@@ -180,6 +181,39 @@ export default function SettingsScreen({
               format={(v) => `${v}%`}
               onChange={(v) => onUpdateConfig({ brightness: v / 100 })}
             />
+
+            <Text style={styles.sectionTitle}>Live map sharing</Text>
+            <Text style={styles.help}>
+              Share the signs you send — with your location — to a live map other
+              CarSign users can see. Off by default. Coordinates are coarsened and
+              no identity is stored.
+            </Text>
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>
+                Share to live map
+                {app.cloudShare ? `  •  ${cloudStatus || 'off'}` : ''}
+              </Text>
+              <Switch
+                value={!!app.cloudShare}
+                onValueChange={(v) => onUpdateApp({ cloudShare: v })}
+                trackColor={{ true: theme.accent }}
+              />
+            </View>
+            <View style={styles.hostRow}>
+              <TextInput
+                style={styles.hostInput}
+                value={draftCloud}
+                onChangeText={setDraftCloud}
+                placeholder="ws://<relay-host>:9090"
+                placeholderTextColor={theme.textDim}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+              />
+              <TouchableOpacity style={styles.saveBtn} onPress={() => onUpdateApp({ cloudUrl: draftCloud.trim() })}>
+                <Text style={styles.saveText}>Save</Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         </View>
       </View>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StatusBar,
   StyleSheet, Text, TouchableOpacity, View,
@@ -14,6 +14,7 @@ import EmergencyRow from './src/components/EmergencyRow';
 import SettingsScreen from './src/screens/SettingsScreen';
 import { useCarSign } from './src/useCarSign';
 import { useDriveState } from './src/useDriveState';
+import { useCloudShare } from './src/useCloudShare';
 import { PRESETS } from './src/protocol';
 import { theme } from './src/theme';
 
@@ -30,7 +31,10 @@ const APP_KEY = 'carsign.app';
 
 // Phone-local settings (the driving lock is driven by this phone's sensors, so
 // it isn't part of the shared server config).
-const DEFAULT_APP = { driveLock: true, autoReact: true, movingKmh: 5, fastKmh: 40 };
+const DEFAULT_APP = {
+  driveLock: true, autoReact: true, movingKmh: 5, fastKmh: 40,
+  cloudShare: false, cloudUrl: '',
+};
 
 const SORRY = PRESETS.find((p) => p.id === 'sorry');
 
@@ -77,6 +81,21 @@ export default function App() {
     autoReact: appCfg.autoReact,
     onHardBrake: handleHardBrake,
   });
+
+  // Live-map sharing (opt-in). Publish whatever is on the screen, with location.
+  const cloud = useCloudShare(appCfg.cloudUrl || null, appCfg.cloudShare);
+  const lastPublished = useRef(null);
+  useEffect(() => {
+    const cur = cs.current;
+    if (!appCfg.cloudShare) return;
+    if (cur && cur.id !== lastPublished.current) {
+      lastPublished.current = cur.id;
+      cloud.publish(cur, drive.coords);
+    } else if (!cur && lastPublished.current) {
+      lastPublished.current = null;
+      cloud.retract();
+    }
+  }, [cs.current, appCfg.cloudShare, cloud, drive.coords]);
 
   const saveHost = async (value) => {
     setHost(value);
@@ -184,6 +203,7 @@ export default function App() {
         appSettings={appCfg}
         onUpdateApp={updateApp}
         drive={drive}
+        cloudStatus={cloud.status}
       />
     </SafeAreaView>
   );

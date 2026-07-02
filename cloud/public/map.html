@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CarSign — Live Map</title>
+    <!-- Leaflet is vendored locally (public/vendor) so the map is self-contained
+         and needs no CDN. Only the map tiles require internet. -->
+    <link rel="stylesheet" href="vendor/leaflet.css" />
+    <link rel="stylesheet" href="map.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <header class="hud">
+      <div class="hud-title">🚗💬 CarSign — Live</div>
+      <div class="hud-stats"><span id="count">0</span> signs live</div>
+      <div id="status" class="hud-status">Connecting…</div>
+    </header>
+
+    <div class="legend">
+      <span><i class="dot hazard"></i> Hazard</span>
+      <span><i class="dot message"></i> Message</span>
+      <span><i class="dot reaction"></i> Reaction</span>
+    </div>
+
+    <script src="vendor/leaflet.js"></script>
+    <script src="map.js"></script>
+  </body>
+</html>

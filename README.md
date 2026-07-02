@@ -16,6 +16,7 @@ phone app over local Wi-Fi, with voice input from either the phone or the car.
 | `server/`   | Node.js server that runs on the screen device (e.g. a Raspberry Pi). Serves the full-screen **display web page** and relays messages over WebSocket. |
 | `server/public/` | The display page itself — huge high-contrast text, animations, and optional car-mic voice input via the browser's Web Speech API. |
 | `mobile/`   | The **controller app** — React Native (Expo). Presets, custom text, phone-mic voice, scheduling, and safety settings. |
+| `cloud/`    | Optional **live-map relay** + web map. Cars publish signs with GPS; a live map shows everyone's signs and hazards in real time. Off by default. |
 | `shared/`   | The wire protocol, shared as the single source of truth. |
 | `docs/`     | [Protocol reference](docs/PROTOCOL.md). |
 
@@ -78,6 +79,34 @@ and Save. Once the header shows **Connected**, tap a preset or compose a message
 > run in Expo Go. Without it, the app still works fully; the mic button is just
 > hidden and you type instead. The **car screen's** voice input needs no build
 > — it uses the browser's built-in speech recognition (Chromium-based browsers).
+
+## Live map (optional, opt-in)
+
+Turn isolated car signs into a real-time network. When **live-map sharing** is
+enabled in the app, the sign currently on your screen is published — with your
+GPS location — to the `cloud/` relay, and appears as a live pin on a shared web
+map alongside every other sharing car. Hazards flash red; messages are amber;
+face/emoji reactions are blue. Pins expire on a timer so the map always reflects
+what's happening *now*.
+
+```bash
+cd cloud
+npm install
+npm start            # → live map at http://<host>:9090, relay on the same port
+```
+
+Then in the app: **Settings → Live map sharing**, flip it on and enter
+`ws://<relay-host>:9090`. Open the relay URL in any browser to watch signs
+appear live.
+
+- **Opt-in & private by default** — sharing is off unless you turn it on, and
+  nothing is published without a location fix. The relay **coarsens coordinates**
+  (~11 m) and stores **no identity** — it's a real-time relay, not a database.
+- **Self-contained** — Leaflet is vendored locally (`cloud/public/vendor`), so
+  the map needs no CDN; only the street tiles require internet.
+- **Local-first** — you can run the relay on your own machine/LAN to try the
+  whole feature without any hosting. Point it at a public host when you're ready
+  to go wide.
 
 ## Features
 

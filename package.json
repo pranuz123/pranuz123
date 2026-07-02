@@ -6,10 +6,12 @@
   "license": "MIT",
   "workspaces": [
     "server",
+    "cloud",
     "mobile"
   ],
   "scripts": {
     "server": "npm --prefix server start",
+    "cloud": "npm --prefix cloud start",
     "mobile": "npm --prefix mobile start"
   },
   "keywords": [

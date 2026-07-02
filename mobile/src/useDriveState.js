@@ -53,6 +53,7 @@ export function useDriveState({
   onHardBrake,
 }) {
   const [speedKmh, setSpeedKmh] = useState(0);
+  const [coords, setCoords] = useState(null); // { lat, lng, heading } | null
   const [gps, setGps] = useState({ available: false, permission: 'unknown' });
   const [accelAvailable, setAccelAvailable] = useState(false);
 
@@ -84,6 +85,11 @@ export function useDriveState({
             const mps = loc.coords.speed;
             const kmh = mps && mps > 0 ? mps * 3.6 : 0;
             setSpeedKmh(kmh);
+            setCoords({
+              lat: loc.coords.latitude,
+              lng: loc.coords.longitude,
+              heading: Number.isFinite(loc.coords.heading) ? loc.coords.heading : null,
+            });
             movingRef.current = kmh >= movingKmh;
           }
         );
@@ -143,6 +149,7 @@ export function useDriveState({
     mode,
     restrictions: driveRestrictions(mode),
     speedKmh: Math.round(speedKmh),
+    coords,
     gpsAvailable: gps.available,
     gpsPermission: gps.permission,
     accelAvailable,
