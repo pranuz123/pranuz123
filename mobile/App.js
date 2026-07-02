@@ -12,7 +12,7 @@ import Composer from './src/components/Composer';
 import QueuePanel from './src/components/QueuePanel';
 import EmergencyRow from './src/components/EmergencyRow';
 import SettingsScreen from './src/screens/SettingsScreen';
-import { useCarSign } from './src/useCarSign';
+import { useCarTalk } from './src/useCarTalk';
 import { useDriveState } from './src/useDriveState';
 import { useCloudShare } from './src/useCloudShare';
 import { PRESETS } from './src/protocol';
@@ -26,8 +26,8 @@ try {
 } catch {
   AsyncStorage = null;
 }
-const HOST_KEY = 'carsign.host';
-const APP_KEY = 'carsign.app';
+const HOST_KEY = 'cartalk.host';
+const APP_KEY = 'cartalk.app';
 
 // Phone-local settings (the driving lock is driven by this phone's sensors, so
 // it isn't part of the shared server config).
@@ -65,7 +65,7 @@ export default function App() {
     return () => { alive = false; };
   }, []);
 
-  const cs = useCarSign(host || null);
+  const cs = useCarTalk(host || null);
   const connected = cs.status === 'connected';
 
   // Auto-reaction: a detected hard brake flashes SORRY! to the car behind.
@@ -135,7 +135,7 @@ export default function App() {
           <Text style={styles.emptyTitle}>Connect to your car screen</Text>
           <Text style={styles.emptyBody}>
             Open Settings and enter the address shown on the screen when the
-            CarSign server starts, e.g. ws://192.168.4.1:8080
+            CarTalk server starts, e.g. ws://192.168.4.1:8080
           </Text>
           <TouchableOpacity style={styles.emptyBtn} onPress={() => setSettingsOpen(true)}>
             <Text style={styles.emptyBtnText}>Open Settings</Text>

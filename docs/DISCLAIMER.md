@@ -1,15 +1,15 @@
 # Safety & Legal Disclaimer
 
-**Read this before deploying or selling CarSign.**
+**Read this before deploying or selling CarTalk.**
 
-CarSign drives a message display mounted in a vehicle. Using it involves real
+CarTalk drives a message display mounted in a vehicle. Using it involves real
 safety and legal considerations. The software is provided as-is, with no
 warranty (see `LICENSE`). You — the deployer, seller, or driver — are solely
 responsible for safe and lawful use.
 
 ## Driving safety
 
-- **Do not compose while driving.** CarSign includes safety features
+- **Do not compose while driving.** CarTalk includes safety features
   (speed-aware locking, one-tap presets, hands-free voice, auto-clearing
   messages) to reduce distraction, but no software can make in-vehicle
   interaction risk-free. Compose while stopped, or let a passenger operate it.
@@ -33,7 +33,7 @@ real emergency, call your local emergency number directly.
   Laws vary by country, state, and municipality and change over time.
 - It is the deployer's responsibility to confirm that a given display, message
   set, mounting, and brightness are legal where the vehicle is operated.
-- If you sell CarSign, make buyers aware of the above and do not represent it as
+- If you sell CarTalk, make buyers aware of the above and do not represent it as
   road-legal anywhere.
 
 ## Data & privacy

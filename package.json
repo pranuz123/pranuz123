@@ -1,5 +1,5 @@
 {
-  "name": "carsign",
+  "name": "cartalk",
   "version": "0.1.0",
   "private": true,
   "description": "Show messages on a car's rear screen, controlled from a phone over local Wi-Fi, with voice input. Node display server + React Native controller app.",

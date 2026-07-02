@@ -1,10 +1,10 @@
-# 🚗💬 CarSign
+# 🚗💬 CarTalk
 
 Show messages on a screen mounted in the back of your car — say "THANKS!",
 "SORRY!", or a quick custom note to the driver behind you — controlled from a
 phone app over local Wi-Fi, with voice input from either the phone or the car.
 
-> ⚠️ **Drive safely.** CarSign is built for low-distraction use: big one-tap
+> ⚠️ **Drive safely.** CarTalk is built for low-distraction use: big one-tap
 > presets, voice dictation, and auto-clearing messages. Compose while stopped,
 > or let a passenger drive the screen. Follow your local laws on in-vehicle
 > displays.
@@ -54,7 +54,7 @@ changes, so multiple phones and multiple screens stay in sync. See
 cd server
 npm install
 npm start
-# → CarSign server listening on http://0.0.0.0:8080
+# → CarTalk server listening on http://0.0.0.0:8080
 ```
 
 Open the printed URL in the screen device's browser and put it in full-screen /
@@ -165,7 +165,7 @@ device just relays and enforces the rules.
 
 - **Universal icon mode + auto-translate** — render messages in the local
   language or pure emoji so there's no language barrier on the road.
-- **Hands-free wake word** — "Hey CarSign, say thanks."
+- **Hands-free wake word** — "Hey CarTalk, say thanks."
 - **Watch / CarPlay / Assistant** quick-send so the phone never leaves the mount.
 - **OBD-II integration** — mirror real brake/turn signals to the screen.
 - Bluetooth transport as a Wi-Fi-free fallback; cloud relay for remote screens.
@@ -173,7 +173,7 @@ device just relays and enforces the rules.
 
 ## Selling / licensing
 
-CarSign is a **commercial product**, not open-source. All original code is the
+CarTalk is a **commercial product**, not open-source. All original code is the
 author's to license; every bundled dependency is under a permissive license that
 allows commercial use.
 

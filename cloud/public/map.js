@@ -1,4 +1,4 @@
-/* CarSign live map viewer.
+/* CarTalk live map viewer.
    Connects to the relay as a 'viewer', renders each live sign as a pin, and
    adds/removes pins in real time as signs arrive and expire. */
 

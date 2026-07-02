@@ -1,7 +1,7 @@
-# CarSign — Setup Guide
+# CarTalk — Setup Guide
 
 This guide takes you from download to a working system, and lists what you must
-configure before shipping a product built on CarSign.
+configure before shipping a product built on CarTalk.
 
 > Please also read **[DISCLAIMER.md](DISCLAIMER.md)** (safety & legal) and the
 > root **LICENSE**.

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * Speed-aware safety lock + accelerometer auto-reactions — CarSign's flagship
+ * Speed-aware safety lock + accelerometer auto-reactions — CarTalk's flagship
  * differentiators. This turns the app from a novelty into a device that adapts
  * to how the car is actually moving.
  *

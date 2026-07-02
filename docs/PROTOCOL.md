@@ -1,4 +1,4 @@
-# CarSign WebSocket Protocol
+# CarTalk WebSocket Protocol
 
 All communication happens over a single WebSocket connection on the local
 network. Every frame is a JSON object with a `type` field. The server is

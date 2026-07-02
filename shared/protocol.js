@@ -1,5 +1,5 @@
 /**
- * CarSign wire protocol — shared by the server and both clients.
+ * CarTalk wire protocol — shared by the server and both clients.
  *
  * Transport: JSON text frames over a single WebSocket connection on the local
  * network. Every frame is an object with a `type` field; the remaining fields

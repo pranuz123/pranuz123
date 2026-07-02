@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
- * Optional connection to the CarSign live-map relay. When enabled and given a
+ * Optional connection to the CarTalk live-map relay. When enabled and given a
  * relay URL, this maintains a lightweight "publisher" WebSocket that the app
  * uses to push the sign currently on the car's screen — together with the
  * phone's GPS location — so it appears on the shared live map.
@@ -44,7 +44,7 @@ export function useCloudShare(url, enabled) {
       ws.onopen = () => {
         retryRef.current = 500;
         setStatus('live');
-        ws.send(JSON.stringify({ type: 'hello', role: 'publisher', name: 'CarSign' }));
+        ws.send(JSON.stringify({ type: 'hello', role: 'publisher', name: 'CarTalk' }));
       };
       ws.onerror = () => setStatus('error');
       ws.onclose = () => {

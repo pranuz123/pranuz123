@@ -1,4 +1,4 @@
-// Shared visual tokens for the CarSign controller app — a dark, high-contrast
+// Shared visual tokens for the CarTalk controller app — a dark, high-contrast
 // theme that stays readable in a bright car.
 export const theme = {
   bg: '#0b0d12',

@@ -1,8 +1,8 @@
 {
-  "name": "carsign-server",
+  "name": "cartalk-server",
   "version": "0.1.0",
   "private": true,
-  "description": "CarSign display server — serves the rear-screen web page and relays messages over WebSocket on the local network.",
+  "description": "CarTalk display server — serves the rear-screen web page and relays messages over WebSocket on the local network.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

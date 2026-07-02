@@ -1,5 +1,5 @@
 /**
- * CarSign wire protocol (mobile copy).
+ * CarTalk wire protocol (mobile copy).
  *
  * This is an ES-module mirror of `shared/protocol.js`. It is duplicated here
  * because the React Native bundler (Metro) does not reliably resolve imports

@@ -21,7 +21,7 @@ const MIME = {
 const httpServer = http.createServer((req, res) => {
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, app: 'CarSign Cloud', live: store.all().length }));
+    res.end(JSON.stringify({ ok: true, app: 'CarTalk Cloud', live: store.all().length }));
     return;
   }
   // Runtime config for the map page (tile provider is deployer-configured).
@@ -140,7 +140,7 @@ wss.on('connection', (ws) => {
 });
 
 httpServer.listen(config.port, config.host, () => {
-  console.log(`CarSign Cloud relay on http://${config.host}:${config.port}`);
+  console.log(`CarTalk Cloud relay on http://${config.host}:${config.port}`);
   console.log(`  Live map:   open the above URL in a browser`);
   console.log(`  Publishers: connect the app to ws://<this-host>:${config.port}`);
   if (config.tiles.usingDefaultOsm) {

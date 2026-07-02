@@ -1,11 +1,11 @@
 # Third-Party Notices
 
-CarSign incorporates the open-source components listed below. Each is used under
+CarTalk incorporates the open-source components listed below. Each is used under
 its respective license, all of which are permissive and allow commercial use and
 redistribution. The full license texts follow the summary table.
 
 You must keep this file (and the notices it contains) in any distribution of
-CarSign, including copies sold or bundled with a product.
+CarTalk, including copies sold or bundled with a product.
 
 ## Summary
 

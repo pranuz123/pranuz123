@@ -26,7 +26,7 @@ const httpServer = http.createServer((req, res) => {
   // A tiny health/info endpoint the mobile app can hit to confirm the address.
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, app: 'CarSign', peers: peerCounts() }));
+    res.end(JSON.stringify({ ok: true, app: 'CarTalk', peers: peerCounts() }));
     return;
   }
   const urlPath = req.url === '/' ? '/index.html' : decodeURI(req.url.split('?')[0]);
@@ -155,7 +155,7 @@ const heartbeat = setInterval(() => {
 heartbeat.unref();
 
 httpServer.listen(config.port, config.host, () => {
-  console.log(`CarSign server listening on http://${config.host}:${config.port}`);
+  console.log(`CarTalk server listening on http://${config.host}:${config.port}`);
   console.log(`  Display page:  open the above URL in the car screen's browser`);
   console.log(`  Mobile app:    connect to ws://<this-device-ip>:${config.port}`);
 });

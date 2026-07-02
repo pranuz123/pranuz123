@@ -1,8 +1,8 @@
 {
-  "name": "carsign-mobile",
+  "name": "cartalk-mobile",
   "version": "0.1.0",
   "private": true,
-  "description": "CarSign controller — React Native (Expo) app to compose, dictate, and schedule messages for the car rear screen over local Wi-Fi.",
+  "description": "CarTalk controller — React Native (Expo) app to compose, dictate, and schedule messages for the car rear screen over local Wi-Fi.",
   "main": "index.js",
   "scripts": {
     "start": "expo start",

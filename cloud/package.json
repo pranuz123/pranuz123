@@ -1,8 +1,8 @@
 {
-  "name": "carsign-cloud",
+  "name": "cartalk-cloud",
   "version": "0.1.0",
   "private": true,
-  "description": "CarSign live map relay — cars publish signs with GPS; a live web map shows everyone's signs and hazards in real time.",
+  "description": "CarTalk live map relay — cars publish signs with GPS; a live web map shows everyone's signs and hazards in real time.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

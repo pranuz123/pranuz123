@@ -2,13 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { C2S, S2C, DEFAULT_CONFIG } from './protocol';
 
 /**
- * React hook that owns the WebSocket link to a CarSign server on the local
+ * React hook that owns the WebSocket link to a CarTalk server on the local
  * network. Handles connect/reconnect, heartbeats, and mirrors server state.
  *
  * @param {string|null} url  e.g. "ws://192.168.4.1:8080". Null pauses the link.
  * @returns connection state plus action callbacks.
  */
-export function useCarSign(url) {
+export function useCarTalk(url) {
   const [status, setStatus] = useState('idle'); // idle | connecting | connected | error
   const [config, setConfig] = useState(DEFAULT_CONFIG);
   const [current, setCurrent] = useState(null);

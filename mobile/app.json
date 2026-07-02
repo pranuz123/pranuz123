@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CarSign",
-    "slug": "carsign",
+    "name": "CarTalk",
+    "slug": "cartalk",
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
@@ -10,18 +10,18 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSMicrophoneUsageDescription": "CarSign uses the microphone to dictate messages for the car screen.",
-        "NSSpeechRecognitionUsageDescription": "CarSign transcribes your speech into on-screen messages.",
-        "NSLocationWhenInUseUsageDescription": "CarSign uses your speed to auto-adjust controls for safe driving."
+        "NSMicrophoneUsageDescription": "CarTalk uses the microphone to dictate messages for the car screen.",
+        "NSSpeechRecognitionUsageDescription": "CarTalk transcribes your speech into on-screen messages.",
+        "NSLocationWhenInUseUsageDescription": "CarTalk uses your speed to auto-adjust controls for safe driving."
       }
     },
     "android": {
-      "package": "com.carsign.app",
+      "package": "com.cartalk.app",
       "permissions": ["RECORD_AUDIO", "INTERNET", "ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
     },
     "plugins": [
       "@react-native-voice/voice",
-      ["expo-location", { "locationWhenInUsePermission": "CarSign uses your speed to auto-adjust controls for safe driving." }]
+      ["expo-location", { "locationWhenInUsePermission": "CarTalk uses your speed to auto-adjust controls for safe driving." }]
     ]
   }
 }

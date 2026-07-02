@@ -185,7 +185,7 @@ export default function SettingsScreen({
             <Text style={styles.sectionTitle}>Live map sharing</Text>
             <Text style={styles.help}>
               Share the signs you send — with your location — to a live map other
-              CarSign users can see. Off by default. Coordinates are coarsened and
+              CarTalk users can see. Off by default. Coordinates are coarsened and
               no identity is stored.
             </Text>
             <View style={styles.row}>

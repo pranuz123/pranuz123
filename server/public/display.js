@@ -1,4 +1,4 @@
-/* CarSign rear-screen display client.
+/* CarTalk rear-screen display client.
    Connects to the same host that served this page, renders incoming messages,
    auto-reconnects, and (optionally) captures the car's mic via the browser's
    Web Speech API so a message can be spoken from inside the vehicle. */
@@ -76,7 +76,7 @@
       case S2C.PONG:
         break; // display doesn't act on these
       case S2C.ERROR:
-        console.warn('CarSign:', msg.message);
+        console.warn('CarTalk:', msg.message);
         break;
     }
   }
